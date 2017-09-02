@@ -12,7 +12,13 @@ add_task(){
 }
 
 remove_task(){
-  echo "Is task done?"
+  while read -r task;
+  do
+    if [[ $task == $1 ]];
+    then
+      sed -i '' "/$1/d" $file  
+    fi
+  done <$file
 }
 
 list_tasks(){
@@ -30,6 +36,7 @@ while getopts ":a:r:l" opt; do
       ;;
     r)
       echo "removing $OPTARG"
+      remove_task $OPTARG
       ;;
     l)
       echo "listing tasks"
